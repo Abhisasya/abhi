@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Car Description</title>
+</head>
+<body>
+
+    <h2>JavaScript Statements</h2>
+    <p id="demo_div"></p>
+
+    <button onclick="show_car_info()">Click for Car info</button>
+<script>
+        const car={
+    Name: "Sanju",
+    Age: "25",
+    Year: "2025",
+    color: "White",
+    description: function(){
+        return "This s a " + this.year + " " + this.name + " "+ this.Age +" in " + this.color + " color ";
+    }
+};
+function show_car_info(){
+    document.getElementById("demo_div").innerHTML = car.description();
+}
+    </script>
+
+</body>
+</html>

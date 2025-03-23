@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Random Number Generator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 50px;
+        }
+        input, button {
+            padding: 10px;
+            margin: 5px;
+            font-size: 16px;
+        }
+        #randomText {
+            font-weight: bold;
+        }
+        #result {
+            font-weight: bold;
+        }
+        #content {
+            display: block; /* Initially visible */
+        }
+        #vanishMessage {
+            display: none; /* Initially hidden */
+            font-size: 2em;
+            font-weight: bold;
+            color: black; /* Black color for "Vanished!" */
+        }
+    </style>
+</head>
+<body>
+
+    <div id="content">
+        <input type="number" id="minRange" placeholder="Enter Min Range">
+        <input type="number" id="maxRange" placeholder="Enter Max Range">
+        <br>
+        <button onclick="generateRandomNumber()">Generate Random Number</button>
+        <p><span id="randomText">Random number is:</span> <span id="result"></span></p>
+    </div>
+
+    <!-- Hidden message that appears after 5 seconds -->
+    <h1 id="vanishMessage">Vanished!</h1>
+
+    <script>
+        const colors = ["red", "green", "blue"];
+
+        function generateRandomNumber() {
+            let minRange = parseInt(document.getElementById("minRange").value);
+            let maxRange = parseInt(document.getElementById("maxRange").value);
+            let resultElement = document.getElementById("result");
+
+            if (isNaN(minRange) || isNaN(maxRange)) {
+                resultElement.innerText = "Please enter valid numbers.";
+                resultElement.style.color = "black"; 
+            } else if (minRange > maxRange) {
+                resultElement.innerText = "Min range should be less than max range.";
+                resultElement.style.color = "black"; 
+            } else {
+                let randomNumber = Math.floor(Math.random() * (maxRange - minRange + 1)) + minRange;
+                resultElement.innerText = randomNumber;
+
+                let randomColor = colors[Math.floor(Math.random() * colors.length)];
+                resultElement.style.color = randomColor; 
+            }
+        }
+
+        (function(){
+            alert('Hello');
+        })();
+
+        setTimeout(() => {
+            document.getElementById("content").style.display = "none";
+            document.getElementById("vanishMessage").style.display = "block";
+        }, 5000);
+    </script>
+
+</body>
+</html>

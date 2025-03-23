@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update Personal Info</title>
+    <script>
+        let users = [
+            { id: 1, name: "Samantha Lee", sex: "female", mail: "samantha.lee@example.com", sNumber: "S00112233" },
+            { id: 2, name: "Michael Brown", sex: "male", mail: "michael.brown@example.com", sNumber: "S00477455" },
+            { id: 3, name: "Emma Davis", sex: "female", mail: "emma.davis@example.com", sNumber: "S00998877" }
+        ];
+
+
+        let currentUserIndex = 0;
+
+        
+        function displayUserInfo() {
+            let user = users[currentUserIndex];
+            document.getElementById("userName").value = user.name;
+            document.getElementById("userSex").value = user.sex;
+            document.getElementById("userEmail").value = user.mail;
+            document.getElementById("userSerialNumber").value = user.sNumber;
+
+            document.getElementById("userInfoDisplay").innerHTML = `
+                Name: ${user.name}<br>
+                Sex: ${user.sex}<br>
+                Email: ${user.mail}<br>
+                Serial Number: ${user.sNumber}
+            `;
+        }
+
+        
+        function updateInfo() {
+            let user = users[currentUserIndex];
+            user.name = document.getElementById("userName").value;
+            user.sex = document.getElementById("userSex").value;
+            user.mail = document.getElementById("userEmail").value;
+            user.sNumber = document.getElementById("userSerialNumber").value;
+
+            displayUserInfo();
+        }
+
+        
+        function switchUser(userIndex) {
+            currentUserIndex = userIndex;
+            displayUserInfo();
+        }
+
+        
+        window.onload = displayUserInfo;
+    </script>
+</head>
+<body>
+    <h1>Update Personal Information</h1>
+
+    
+    <select onchange="switchUser(this.value)" id="userSelector">
+        <option value="0">Samantha Lee</option>
+        <option value="1">Michael Brown</option>
+        <option value="2">Emma Davis</option>
+    </select>
+
+    <form onsubmit="event.preventDefault(); updateInfo();">
+        <input type="text" id="userName" placeholder="Enter Name"><br><br>
+        <input type="text" id="userSex" placeholder="Enter Sex"><br><br>
+        <input type="text" id="userEmail" placeholder="Enter Email"><br><br>
+        <input type="text" id="userSerialNumber" placeholder="Enter Serial Number"><br><br>
+
+  
+        <button type="submit">Update Info</button>
+    </form>
+
+    <br>
+
+\
+    <h3>Updated User Info:</h3>
+    <div id="userInfoDisplay">
+    
+        Name: Samantha Lee<br>
+        Sex: female<br>
+        Email: samantha.lee@example.com<br>
+        Serial Number: S00112233
+    </div>
+</body>
+</html>

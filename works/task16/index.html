@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Car Age Calculator</title>
+</head>
+<body>
+    <h1>Car Age Calculator</h1>
+    <label for="carYear">Year:</label>
+    <input type="number" id="carYear" placeholder="YYYY">
+    <label for="carMonth">Month:</label>
+    <input type="number" id="carMonth" placeholder="MM" min="1" max="12">
+    <label for="carDay">Day:</label>
+    <input type="number" id="carDay" placeholder="DD" min="1" max="31">
+    <button onclick="calculateCarAge()">Calculate Age</button>
+    <p id="carAge"></p>
+
+    <script>
+        class Car {
+            constructor(name, year, month, day) {
+                this.name = name;
+                this.year = year;
+                this.month = month;
+                this.day = day;
+            }
+
+            getAge() {
+                let currentDate = new Date();
+                let carDate = new Date(this.year, this.month - 1, this.day);
+                
+                let age = currentDate.getFullYear() - carDate.getFullYear();
+                let monthDiff = currentDate.getMonth() - carDate.getMonth();
+                let dayDiff = currentDate.getDate() - carDate.getDate();
+                
+                if (monthDiff < 0 || (monthDiff === 0 && dayDiff < 0)) {
+                    age--;
+                }
+                return age;
+            }
+        }
+
+        function calculateCarAge() {
+            let year = parseInt(document.getElementById("carYear").value);
+            let month = parseInt(document.getElementById("carMonth").value);
+            let day = parseInt(document.getElementById("carDay").value);
+            
+            if (isNaN(year) || isNaN(month) || isNaN(day)) {
+                document.getElementById("carAge").innerText = "Please enter a valid date.";
+                return;
+            }
+            
+            let myCar = new Car("Toyota", year, month, day);
+            let carAge = myCar.getAge();
+            document.getElementById("carAge").innerText = `The ${myCar.name} is ${carAge} years old.`;
+        }
+    </script>
+</body>
+</html>

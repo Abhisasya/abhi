@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update Personal Info</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f4f4f4;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        table {
+            width: 100%;
+            margin: 20px 0;
+            border-collapse: collapse;
+        }
+
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+
+        th {
+            background-color:blue;
+            color: white;
+        }
+
+        input, button {
+            padding: 8px;
+            margin: 5px;
+            width: 200px;
+        }
+
+        button {
+            background-color:green;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        .button1 {
+            background-color:green;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: red;
+        }
+        .button1:hover {
+            background-color: red;
+        }
+
+        .button-group {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .output {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #fff;
+            border: 1px solid #ddd;
+        }
+
+    </style>
+    <script>
+        function User(name, sex, mail, sNumber) {
+            this.name = name;
+            this.sex = sex;
+            this.mail = mail;
+            this.sNumber = sNumber;
+            this.describe = function() {
+                return `Name: ${this.name}<br>Sex: ${this.sex}<br>Email: ${this.mail}<br>Serial Number: ${this.sNumber}`;
+            };
+        }
+
+        let users = [
+            new User("Samantha Lee", "female", "samantha.lee@example.com", "S00112233"),
+            new User("Michael Brown", "male", "michael.brown@example.com", "S00477455"),
+            new User("Emma Davis", "female", "emma.davis@example.com", "S00998877")
+        ];
+
+        let currentUserIndex = 0;
+
+        function displayUserInfo() {
+            let user = users[currentUserIndex];
+            document.getElementById("userName").value = user.name;
+            document.getElementById("userSex").value = user.sex;
+            document.getElementById("userEmail").value = user.mail;
+            document.getElementById("userSerialNumber").value = user.sNumber;
+
+            document.getElementById("userInfoDisplay").innerHTML = user.describe();
+        }
+
+        function updateInfo() {
+            let user = users[currentUserIndex];
+            user.name = document.getElementById("userName").value;
+            user.sex = document.getElementById("userSex").value;
+            user.mail = document.getElementById("userEmail").value;
+            user.sNumber = document.getElementById("userSerialNumber").value;
+
+            displayUserInfo();
+        }
+
+        function switchUser(userIndex) {
+            currentUserIndex = userIndex;
+            displayUserInfo();
+        }
+
+        function insertData() {
+            let name = document.getElementById("userName").value;
+            let sex = document.getElementById("userSex").value;
+            let email = document.getElementById("userEmail").value;
+            let serialNumber = document.getElementById("userSerialNumber").value;
+
+            if (name && sex && email && serialNumber) {
+                users.push(new User(name, sex, email, serialNumber));
+                alert("User added successfully!");
+                displayUserInfo();
+            } else {
+                alert("Please fill in all fields!");
+            }
+        }
+
+        function clearInput() {
+            document.getElementById("userName").value = "";
+            document.getElementById("userSex").value = "";
+            document.getElementById("userEmail").value = "";
+            document.getElementById("userSerialNumber").value = "";
+        }
+
+        function showAllData() {
+            let output = "";
+            users.forEach(user => {
+                output += user.describe() + "<br><br>";
+            });
+            document.getElementById("userInfoDisplay").innerHTML = output;
+        }
+
+        function clearOutput() {
+            document.getElementById("userInfoDisplay").innerHTML = "";
+        }
+
+        // Search Functionality
+        function search() {
+            let key = document.getElementById("searchField").value.toLowerCase();
+            let output = "";
+
+            for (let user of users) {
+                if (user.name.toLowerCase().includes(key) ||
+                    user.sex.toLowerCase().includes(key) ||
+                    user.mail.toLowerCase().includes(key) ||
+                    user.sNumber.toLowerCase().includes(key)) {
+                    output += user.describe() + "<br><br>";
+                }
+            }
+
+            document.getElementById("userInfoDisplay").innerHTML = output ? output : "No matching users found.";
+        }
+
+        window.onload = displayUserInfo;
+    </script>
+</head>
+<body>
+    <h1>Update Personal Information</h1>
+
+    <table>
+        <tr>
+            <th colspan="2">User Information</th>
+        </tr>
+        <tr>
+            <td><label for="userSelector">Select User:</label></td>
+            <td>
+                <select onchange="switchUser(this.value)" id="userSelector">
+                    <option value="0">Samantha Lee</option>
+                    <option value="1">Michael Brown</option>
+                    <option value="2">Emma Davis</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td><label for="userName">Name:</label></td>
+            <td><input type="text" id="userName" placeholder="Enter Name"></td>
+        </tr>
+        <tr>
+            <td><label for="userSex">Sex:</label></td>
+            <td><input type="text" id="userSex" placeholder="Enter Sex"></td>
+        </tr>
+        <tr>
+            <td><label for="userEmail">Email:</label></td>
+            <td><input type="text" id="userEmail" placeholder="Enter Email"></td>
+        </tr>
+        <tr>
+            <td><label for="userSerialNumber">Serial Number:</label></td>
+            <td><input type="text" id="userSerialNumber" placeholder="Enter Serial Number"></td>
+        </tr>
+    </table>
+
+    
+    <div>
+        <label for="searchField">Search Users:</label>
+        <input type="text" id="searchField" placeholder="Search by name, sex, email, or serial number" oninput="search()">
+    </div>
+
+    <div class="button-group">
+        <button onclick="insertData()">Insert Data</button>
+        <button onclick="clearInput()">Clear Input</button>
+        <button class="button1" onclick="showAllData()">Show All Data</button>
+        <button class="button1" onclick="clearOutput()">Clear Output</button>
+    </div>
+
+    <div id="userInfoDisplay" class="output">
+        Name: Samantha Lee<br>
+        Sex: female<br>
+        Email: samantha.lee@example.com<br>
+        Serial Number: S00112233
+    </div>
+</body>
+</html>

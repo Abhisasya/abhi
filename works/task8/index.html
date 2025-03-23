@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <body>
+        <input type="text" placeholder="Enter Number" id="hhj" onkeyup="Generate_shape()">
+        <div id="test"></div>
+    <style>
+       
+    </style>
+    <script>
+        let colors=["blue","red","green","orange"];
+        let index=0;
+        let size=colors.length;
+        function Generate_shape() {
+            let text = "";
+            let z = parseInt(document.getElementById('hhj').value);
+            let i = 0;
+        do{
+        for (let j = 0; j <= i; j++) {
+            text += "* ";
+        }
+        text += "<br>";
+        i++;
+    }while(i<z)
+            document.getElementById("test").innerHTML = text;
+           
+            document.getElementById("test").style='color:'+colors[index];
+       
+           index=(index+1)%size;
+           
+        }
+    </script>
+</head>
+</body>
+</html>
+
